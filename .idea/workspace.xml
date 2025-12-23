@@ -4,51 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7ce3053-bab4-4205-afa0-bc2dffc396c0" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/campus-ai-common/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/campus-ai-common/src/main/java/com/nijiahao/common/core/domain/BaseEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/campus-ai-common/src/main/java/com/nijiahao/common/core/domain/PageResult.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/campus-ai-common/src/main/java/com/nijiahao/common/core/domain/Result.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/campus-ai-common/src/main/java/com/nijiahao/common/core/domain/ResultCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/campus-ai-common/src/main/java/com/nijiahao/common/core/domain/UserContext.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/campus-ai-common/src/main/java/com/nijiahao/common/core/exception/ServiceException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/campus-ai-common/src/main/java/com/nijiahao/common/core/interceptor/UserContextInterceptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/campus-ai-gateway/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/campus-ai-gateway/src/main/java/com/nijiahao/gateway/CampusAiGatewayApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/campus-ai-gateway/src/main/java/com/nijiahao/gateway/config/SaTokenGatewayConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/campus-ai-gateway/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/campus-ai-service-feign/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-llm/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-llm/src/main/java/com/nijiahao/llm/CampusAiLlmApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-llm/src/main/java/com/nijiahao/llm/controller/TestController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-llm/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/CampusAiSystemApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/UserAuthApi.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/UserManagementApi.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/dto/Po/UserPo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/dto/req/UserAddDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/dto/req/UserLoginDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/dto/req/UserQueryDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/dto/req/UserRegisterDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/dto/req/UserUpdateDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/dto/res/UserLoginVo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/dto/res/UserVo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/config/GlobalExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/config/MyMetaObjectHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/config/MybatisPlusConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/config/SaTokenConfigure.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/config/StpInterfaceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/controller/TestController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/controller/UserAuthController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/controller/UserManagementController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/mapper/UserMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/service/UserAuthService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/service/UserManagementService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/service/impl/UserAuthServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/service/impl/UserManagementServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    <list default="true" id="f7ce3053-bab4-4205-afa0-bc2dffc396c0" name="更改" comment="feat:微服务搭建，用户端接口（登陆、crud）">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -230,11 +188,35 @@
       <workItem from="1766305322347" duration="1073000" />
       <workItem from="1766367648872" duration="9548000" />
       <workItem from="1766383839486" duration="18433000" />
-      <workItem from="1766454289491" duration="11549000" />
+      <workItem from="1766454289491" duration="12265000" />
     </task>
+    <task id="LOCAL-00001" summary="feat:微服务搭建，用户端接口（登陆、crud）">
+      <option name="closed" value="true" />
+      <created>1766470751964</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1766470751964</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat:微服务搭建，用户端接口（登陆、crud）" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat:微服务搭建，用户端接口（登陆、crud）" />
   </component>
 </project>
