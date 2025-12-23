@@ -1,0 +1,14 @@
+server:
+  port: 9011
+spring:
+  application:
+    name: campus-ai-service-llm
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+springdoc:
+  swagger-ui:
+    enabled: true
+  api-docs:
+    path: /llm/v3/api-docs

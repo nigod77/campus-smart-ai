@@ -1,0 +1,77 @@
+server:
+  port: 9000
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: campus-ai-gateway
+  data:
+    redis:
+      database: 0
+      host: 127.0.0.1
+      port: 6379
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        register-enabled: true
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-headers: "*"
+            allowed-methods: "*"
+            allowed-origin-patterns: "*"
+            allow-credentials: true
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: campus-ai-service-system
+          uri:
+            lb://campus-ai-service-system
+          predicates:
+            - Path=/api/campus/system/**
+          filters:
+            - StripPrefix=2
+        - id: campus-ai-service-llm
+          uri:
+            lb://campus-ai-service-llm
+          predicates:
+            - Path=/api/campus/llm/**
+          filters:
+            - StripPrefix=2
+sa-token:
+  # token名称 (同时也是cookie名称)
+  token-name: Authorization
+  # token有效期，单位s 默认30天
+  timeout: 2592000
+  # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
+  is-concurrent: true
+  # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
+  is-share: true
+  # token风格
+  token-style: uuid
+  #操作日志
+  is-log: true
+
+  data-refresh-period: 600
+
+springdoc:
+  swagger-ui:
+    path: /nijiahao-ui.html
+    enabled: true
+    urls:
+      - name: "系统服务(system)"
+        url: /api/campus/system/v3/api-docs
+      - name: "大模型服务(llm)"
+        url: /api/campus/llm/v3/api-docs
+  api-docs:
+    enabled: true
+
+
+
+
+
+
+
