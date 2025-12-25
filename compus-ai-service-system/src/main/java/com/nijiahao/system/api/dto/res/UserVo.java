@@ -25,5 +25,9 @@ public class UserVo {
 
     private String workId;
 
+    private Integer gender;
+
+    private Integer revision;
+
 
 }

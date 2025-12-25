@@ -19,7 +19,26 @@ public enum ResultCode {
     USER_LOCKED(1003, "账号已被锁定"),
     USER_UPDATE_ERROR(1004,"该用户不存在或数据库错误"),
     USER_DELETE_ERROR(1005,"请选择要删除的用户"),
-    USER_USERNAME_EXISTS(1004,"账号已存在");
+    USER_USERNAME_EXISTS(1006,"账号已存在"),
+    DATA_IS_OUTDATED(1007 , "数据过期"),
+
+    CLASS_EXIST(1107 , "班级已经存在"),
+    CLASS_NOT_EXIST(1108 , "班级不存在或数据库异常"),
+    CLASS_HAS_STUDENTS(1109 , "该班级有学生，不可删除"),
+    CLASS_DELETE_ERROR(1110,"班级删除失败"),
+
+    TERM_ANOTHERTERM_ING(1201 , "别的学期正在进行"),
+    TERM_NAME_REPLY(1202,"有重复的学期名"),
+    TERM_NOT_EXIST(1203 , "班级不存在或数据库异常"),
+    TERM_UPDATE_ERROR(1204,"学期删除失败"),
+    TERM_PROCESSING_NOW(1205,"该学期正在进行，请先停止再删除"),
+    TERM_DELETE_ERROR(1206,"学期删除失败"),
+
+
+
+    ;
+
+
 
     private final int code;
     private final String msg;

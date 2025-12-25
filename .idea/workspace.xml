@@ -5,8 +5,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7ce3053-bab4-4205-afa0-bc2dffc396c0" name="更改" comment="feat:微服务搭建，用户端接口（登陆、crud）">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.agent.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.ask.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.edit.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/ClassManagementApi.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/TermManagementApi.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/dto/Po/ClassPo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/dto/Po/TermPo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/dto/req/ClassAddDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/dto/req/ClassQueryDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/dto/req/ClassUpdateDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/dto/req/TermAddDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/dto/req/TermQueryDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/dto/req/TermUpdateDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/dto/res/ClassVo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/dto/res/TermVo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/controller/ClassManagementController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/controller/TermManagementController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/mapper/ClassMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/mapper/TermMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/service/ClassManagementService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/service/TermManagementService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/service/impl/ClassManagementServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/service/impl/TermManagementServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/campus-ai-common/src/main/java/com/nijiahao/common/core/domain/ResultCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/campus-ai-common/src/main/java/com/nijiahao/common/core/domain/ResultCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/campus-ai-common/target/classes/com/nijiahao/common/core/domain/ResultCode.class" beforeDir="false" afterPath="$PROJECT_DIR$/campus-ai-common/target/classes/com/nijiahao/common/core/domain/ResultCode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/UserManagementApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/UserManagementApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/dto/res/UserVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/api/dto/res/UserVo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/service/impl/UserAuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/service/impl/UserAuthServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/service/impl/UserManagementServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/compus-ai-service-system/src/main/java/com/nijiahao/system/service/impl/UserManagementServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compus-ai-service-system/target/classes/com/nijiahao/system/api/dto/res/UserVo$UserVoBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/compus-ai-service-system/target/classes/com/nijiahao/system/api/dto/res/UserVo$UserVoBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compus-ai-service-system/target/classes/com/nijiahao/system/api/dto/res/UserVo.class" beforeDir="false" afterPath="$PROJECT_DIR$/compus-ai-service-system/target/classes/com/nijiahao/system/api/dto/res/UserVo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compus-ai-service-system/target/classes/com/nijiahao/system/service/impl/UserAuthServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/compus-ai-service-system/target/classes/com/nijiahao/system/service/impl/UserAuthServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compus-ai-service-system/target/classes/com/nijiahao/system/service/impl/UserManagementServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/compus-ai-service-system/target/classes/com/nijiahao/system/service/impl/UserManagementServiceImpl.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,40 +88,42 @@
     <option name="sortByType" value="true" />
     <option name="sortKey" value="BY_TYPE" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;HTTP 请求.generated-requests | #5.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.campus-ai-gateway [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.campus-ai-gateway [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.campus-smart-ai2 [clean].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.CampusAiGatewayApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.CampusAiLlmApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.CampusAiSystemApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.CampusSmartAi2Application.executor&quot;: &quot;Debug&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;ms-17&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/devl&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/86136/Desktop/campus-smart-ai2/campus-ai-service-feign/src/main/java/com/nijiahao/feign/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.6015164&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;,
-    &quot;settings.editor.splitter.proportion&quot;: &quot;0.30120483&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "HTTP 请求.generated-requests | #5.executor": "Run",
+    "Maven.campus-ai-gateway [clean].executor": "Run",
+    "Maven.campus-ai-gateway [compile].executor": "Run",
+    "Maven.campus-smart-ai2 [clean].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.CampusAiGatewayApplication.executor": "Debug",
+    "Spring Boot.CampusAiLlmApplication.executor": "Debug",
+    "Spring Boot.CampusAiSystemApplication.executor": "Debug",
+    "Spring Boot.CampusSmartAi2Application.executor": "Debug",
+    "extract.method.default.visibility": "private",
+    "git-widget-placeholder": "master",
+    "jdk.selected.JAVA_MODULE": "ms-17",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/devl",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "C:/Users/86136/Desktop/campus-smart-ai2/campus-ai-service-feign/src/main/java/com/nijiahao/feign/Main.java",
+    "project.structure.last.edited": "模块",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.6015164",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "com.github.copilot.settings.completions.CompletionsConfigurable",
+    "settings.editor.splitter.proportion": "0.30120483",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -188,7 +223,14 @@
       <workItem from="1766305322347" duration="1073000" />
       <workItem from="1766367648872" duration="9548000" />
       <workItem from="1766383839486" duration="18433000" />
-      <workItem from="1766454289491" duration="12265000" />
+      <workItem from="1766454289491" duration="29299000" />
+      <workItem from="1766540274200" duration="32000" />
+      <workItem from="1766560186859" duration="14035000" />
+      <workItem from="1766628322293" duration="211000" />
+      <workItem from="1766628554095" duration="2462000" />
+      <workItem from="1766631044028" duration="143000" />
+      <workItem from="1766631194757" duration="1541000" />
+      <workItem from="1766632755083" duration="477000" />
     </task>
     <task id="LOCAL-00001" summary="feat:微服务搭建，用户端接口（登陆、crud）">
       <option name="closed" value="true" />
@@ -198,7 +240,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766470751964</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="feat:微服务搭建，用户端接口（登陆、crud）">
+      <option name="closed" value="true" />
+      <created>1766471524633</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1766471524633</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -218,5 +268,17 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat:微服务搭建，用户端接口（登陆、crud）" />
     <option name="LAST_COMMIT_MESSAGE" value="feat:微服务搭建，用户端接口（登陆、crud）" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>

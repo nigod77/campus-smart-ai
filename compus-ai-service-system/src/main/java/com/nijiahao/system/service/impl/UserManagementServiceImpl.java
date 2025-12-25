@@ -16,6 +16,7 @@ import com.nijiahao.system.mapper.UserMapper;
 import com.nijiahao.system.service.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -53,32 +54,60 @@ public class UserManagementServiceImpl extends ServiceImpl<UserMapper , UserPo> 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public UserVo updateUser(UserUpdateDto userUpdateDto) {
-        // 1. 先查出数据库里的最新数据（包含当前的 revision）
-        UserPo userPo = UserPo.builder()
-                .id(userUpdateDto.getId())
-                .password(userUpdateDto.getPassword())
-                .nickName(userUpdateDto.getNickname())
-                .gender(userUpdateDto.getGender())
-                .image(userUpdateDto.getImage())
-                .workId(userUpdateDto.getWorkId())
-                .identity(userUpdateDto.getIdentity())
-                .revision(userUpdateDto.getRevision())
-                .build();
+        // 1. 参数基础校验 (防止 ID 为空)
+        if (userUpdateDto.getId() == null) {
+            throw new ServiceException(ResultCode.PARAM_ERROR);
+        }
+        // 2.查询数据库当前数据
+        UserPo oldUser = userMapper.selectById(userUpdateDto.getId());
+        if (oldUser == null) {
+            throw new ServiceException(ResultCode.USER_NOT_EXIST);
+        }
+        // 3. 构建更新对象
+        UserPo updateEntity = new UserPo();
+        updateEntity.setId(userUpdateDto.getId());
+        // 如果 updateDto.getRevision() 为空，说明前端没传版本号，这是不合法的请求
+        if (userUpdateDto.getRevision() == null) {
+            throw new ServiceException(ResultCode.PARAM_ERROR);
+        }
+        updateEntity.setRevision(userUpdateDto.getRevision());
 
-        int i = userMapper.updateById(userPo);
+        // 5. 逐个判断字段，有值才更新 (避免 null 或空字符串覆盖原数据)
+        boolean hasChange = false;
 
-        if(i != 1){
-            throw new ServiceException(ResultCode.USER_UPDATE_ERROR);
+        if (StringUtils.hasText(userUpdateDto.getNickname())) {
+            updateEntity.setNickName(userUpdateDto.getNickname());
+            hasChange = true;
         }
 
-        UserPo userPo1 = userMapper.selectById(userPo.getId());
+        if (StringUtils.hasText(userUpdateDto.getImage())) {
+            updateEntity.setImage(userUpdateDto.getImage());
+            hasChange = true;
+        }
 
+        if (userUpdateDto.getGender() != null) {
+            updateEntity.setGender(userUpdateDto.getGender());
+            hasChange = true;
+        }
+        // 6. 执行更新
+        if (hasChange) {
+            int rows = userMapper.updateById(updateEntity);
+            if (rows == 0) {
+                throw new ServiceException(ResultCode.DATA_IS_OUTDATED);
+            }
+        }
+        // 7. 重新查询最新数据返回 (为了获取最新的 updateTime 和 revision)
+        UserPo latestUser = userMapper.selectById(userUpdateDto.getId());
         return UserVo.builder()
-                .id(userPo1.getId())
-                .userName(userPo1.getUserName())
-                .nickName(userPo1.getNickName())
-                .identity(userPo1.getIdentity())
+                .id(latestUser.getId())
+                .userName(latestUser.getUserName())
+                .nickName(latestUser.getNickName())
+                .identity(latestUser.getIdentity())
+                .image(latestUser.getImage())
+                .gender(latestUser.getGender())
+                .revision(latestUser.getRevision())
                 .build();
     }
 

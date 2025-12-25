@@ -19,8 +19,6 @@ import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
 @Slf4j
 @Service
 public class UserAuthServiceImpl extends ServiceImpl<UserMapper, UserPo> implements UserAuthService {
