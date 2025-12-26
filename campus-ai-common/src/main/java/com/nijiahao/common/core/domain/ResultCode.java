@@ -20,6 +20,7 @@ public enum ResultCode {
     USER_UPDATE_ERROR(1004,"该用户不存在或数据库错误"),
     USER_DELETE_ERROR(1005,"请选择要删除的用户"),
     USER_USERNAME_EXISTS(1006,"账号已存在"),
+    NOT_TEACHER(1008 , "这个用户不是教师"),
     DATA_IS_OUTDATED(1007 , "数据过期"),
 
     CLASS_EXIST(1107 , "班级已经存在"),
@@ -34,6 +35,10 @@ public enum ResultCode {
     TERM_PROCESSING_NOW(1205,"该学期正在进行，请先停止再删除"),
     TERM_DELETE_ERROR(1206,"学期删除失败"),
 
+    COURSE_EXIST(1210 , "这个课程已经存在了"),
+    COURSE_DELETE_ERROR(1211,"课程删除失败"),
+    COURSE_NOT_EXIST(1212 , "课程不存在"),
+    COURSE_INSERT_ERROR(1213 , "课程插入失败"),
 
 
     ;

@@ -196,6 +196,8 @@ public class UserManagementServiceImpl extends ServiceImpl<UserMapper , UserPo> 
 
         //4.数据转换PO->VO
         List<UserVo> userVos = userPoPage.getRecords().stream().map(po-> UserVo.builder()
+                .id(po.getId())
+                .userName(po.getUserName())
                 .nickName(po.getNickName())
                 .identity(po.getIdentity())
                 .classId(po.getClassId())
