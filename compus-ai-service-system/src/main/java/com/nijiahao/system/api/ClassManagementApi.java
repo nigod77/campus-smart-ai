@@ -16,7 +16,6 @@ import java.util.List;
 @RequestMapping("/system/class")
 public interface ClassManagementApi {
 
-
     @Operation(summary = "新增班级" , description = "输入 年级（年份），专业 ，班级 存入数据库")
     @PostMapping("/manage/add")
     Result<ClassVo> addClass(@RequestBody ClassAddDto classAddDto) ;
