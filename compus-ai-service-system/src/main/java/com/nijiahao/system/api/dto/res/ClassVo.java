@@ -1,5 +1,7 @@
 package com.nijiahao.system.api.dto.res;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ClassVo {
 
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /**

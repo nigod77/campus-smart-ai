@@ -207,6 +207,7 @@ public class UserManagementServiceImpl extends ServiceImpl<UserMapper , UserPo> 
                 .classId(po.getClassId())
                 .workId(po.getWorkId())
                 .image(po.getImage())
+                .revision(po.getRevision())
                 .build()).toList();
 
         return PageResult.<UserVo>builder()

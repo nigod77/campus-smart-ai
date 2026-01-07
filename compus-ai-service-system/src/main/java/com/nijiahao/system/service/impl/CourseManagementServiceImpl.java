@@ -268,6 +268,7 @@ public class CourseManagementServiceImpl extends ServiceImpl<CourseMapper , Cour
                 .weekType(po.getWeekType())
                 .teachingClassName(po.getTeachingClassName())
                 .sectionCount(po.getSectionCount())
+                .revision(po.getRevision())
                 .build()
         ).toList();
 
