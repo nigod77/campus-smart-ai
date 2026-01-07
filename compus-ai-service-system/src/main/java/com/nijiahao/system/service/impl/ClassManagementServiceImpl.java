@@ -66,6 +66,10 @@ public class ClassManagementServiceImpl extends ServiceImpl<ClassMapper , ClassP
         updateEntity.setId(classUpdateDto.getId());
         updateEntity.setRevision(oldClassPo.getRevision());
 
+        updateEntity.setMajor(oldClassPo.getMajor());
+        updateEntity.setGrade(oldClassPo.getGrade());
+        updateEntity.setClassNumber(oldClassPo.getClassNumber());
+
         boolean hasChanged = false;
 
         if (classUpdateDto.getClassNumber() != null) {
@@ -80,6 +84,21 @@ public class ClassManagementServiceImpl extends ServiceImpl<ClassMapper , ClassP
             updateEntity.setGrade(classUpdateDto.getGrade());
             hasChanged = true;
         }
+        //新增查重校验 查看是否有  年级 专业 班级 相同的班级
+        if (hasChanged) {
+            LambdaQueryWrapper<ClassPo> eq = Wrappers.lambdaQuery(ClassPo.class)
+                    .eq(ClassPo::getGrade, updateEntity.getGrade())
+                    .eq(ClassPo::getMajor, updateEntity.getMajor())
+                    .eq(ClassPo::getClassNumber, updateEntity.getClassNumber());
+            Long classCount = classMapper.selectCount(eq);
+            if (classCount > 0) {
+                throw new ServiceException(ResultCode.CLASS_EXIST);
+            }
+
+        }
+
+
+
 
         if (hasChanged) {
             int i = classMapper.updateById(updateEntity);
