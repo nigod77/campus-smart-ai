@@ -11,8 +11,15 @@ public class CourseEnrollmentQueryDto {
 
     private String courseId;
 
-    private Integer studentId;
+    private String studentId;
 
-    private Long termId;
+    private String termId;
+
+    private String courseName;
+
+    private String termName;
+
+    private String studentName;
+
 
 }

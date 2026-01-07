@@ -4,7 +4,6 @@ import com.nijiahao.common.core.domain.PageResult;
 import com.nijiahao.common.core.domain.Result;
 import com.nijiahao.system.api.dto.req.CourseEnrollmentAddDto;
 import com.nijiahao.system.api.dto.req.CourseEnrollmentQueryDto;
-import com.nijiahao.system.api.dto.req.CourseEnrollmentUpdateDto;
 import com.nijiahao.system.api.dto.res.CourseEnrollmentVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,9 +19,6 @@ public interface CourseEnrollmentApi {
     @PostMapping("/manage/add")
     Result<CourseEnrollmentVo> enrollmentAdd(@RequestBody CourseEnrollmentAddDto courseEnrollmentAddDto);
 
-    @Operation(summary = "修改选课关系" , description = "修改选课关系表")
-    @PostMapping("/manage/update")
-    Result<CourseEnrollmentVo> enrollmentUpdate(@RequestBody CourseEnrollmentUpdateDto courseEnrollmentUpdateDto);
 
     @Operation(summary = "根据id查询一个选课关系" , description = "根据id查询一个选课关系")
     @GetMapping("/manage/select")

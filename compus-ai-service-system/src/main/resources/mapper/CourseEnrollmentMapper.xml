@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nijiahao.system.mapper.CourseEnrollmentMapper">
+    <select id="selectCourseEnrollmentPage" resultType="com.nijiahao.system.api.dto.res.CourseEnrollmentVo">
+        SELECT
+        e.id,
+        e.student_id,
+        e.course_id,
+        e.term_id,
+        t.term_name AS termName,
+        u.nick_name AS studentName,
+        c.teacher_id AS teacherId,
+        c.course_name AS courseName,
+        c.location AS location
+        FROM
+        campus_sys_course_enrollment e
+        LEFT JOIN
+        campus_sys_user u ON e.student_id = u.id
+        LEFT JOIN
+        campus_sys_course c ON e.course_id = c.id
+        LEFT JOIN
+        /* 建议：既然 e 表里有 term_id，通常直接用 e.term_id 关联 term 表更准确 */
+        campus_sys_term t ON t.id = e.term_id
+        <where>
+            e.deleted = 0
+
+            <if test="param.studentId != null and param.studentId != ''">
+                AND e.student_id = #{param.studentId}
+            </if>
+
+            <if test="param.courseId != null and param.courseId != ''">
+                AND e.course_id = #{param.courseId}
+            </if>
+
+            <if test="param.termId != null and param.termId != ''">
+                AND e.term_id = #{param.termId}
+            </if>
+
+            <if test="param.studentName != null and param.studentName != ''">
+                AND u.nick_name LIKE CONCAT('%', #{param.studentName}, '%')
+            </if>
+            <if test="param.courseName != null and param.courseName != ''">
+                AND c.course_name LIKE CONCAT('%', #{param.courseName}, '%')
+            </if>
+        </where>
+        ORDER BY e.create_time DESC
+    </select>
+</mapper>

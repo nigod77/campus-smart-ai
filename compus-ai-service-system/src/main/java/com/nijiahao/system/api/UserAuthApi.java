@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public interface UserAuthApi {
 
     @Operation(summary = "用户登陆" , description = "返回token令牌")
-    @GetMapping("/auth/login")
+    @PostMapping("/auth/login")
     Result<UserLoginVo> login(@RequestBody UserLoginDto userLoginDto);
 
     @Operation(summary = "用户注册" , description = "注册新账号，注册成功后需重新登录")

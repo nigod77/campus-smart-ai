@@ -1,8 +1,9 @@
 package com.nijiahao.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nijiahao.common.core.domain.PageResult;
 import com.nijiahao.common.core.domain.ResultCode;
@@ -13,9 +14,7 @@ import com.nijiahao.system.api.dto.Po.TermPo;
 import com.nijiahao.system.api.dto.Po.UserPo;
 import com.nijiahao.system.api.dto.req.CourseEnrollmentAddDto;
 import com.nijiahao.system.api.dto.req.CourseEnrollmentQueryDto;
-import com.nijiahao.system.api.dto.req.CourseEnrollmentUpdateDto;
 import com.nijiahao.system.api.dto.res.CourseEnrollmentVo;
-import com.nijiahao.system.api.dto.res.CourseVo;
 import com.nijiahao.system.mapper.CourseEnrollmentMapper;
 import com.nijiahao.system.mapper.CourseMapper;
 import com.nijiahao.system.mapper.TermMapper;
@@ -26,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseEnrollmentServiceImpl extends ServiceImpl< CourseEnrollmentMapper,CourseEnrollmentPo > implements CourseEnrollmentService {
@@ -88,29 +88,88 @@ public class CourseEnrollmentServiceImpl extends ServiceImpl< CourseEnrollmentMa
                 .build();
     }
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public CourseEnrollmentVo enrollmentUpdate(CourseEnrollmentUpdateDto courseEnrollmentUpdateDto) {
-        return null;
-    }
 
     @Override
     public CourseEnrollmentVo enrollmentSelectOne(Long id) {
-        return null;
+        if (id == null) {
+            throw new ServiceException(ResultCode.PARAM_ERROR);
+        }
+        CourseEnrollmentPo courseEnrollmentPo = courseEnrollmentMapper.selectById(id);
+        return CourseEnrollmentVo.builder()
+                .courseId(courseEnrollmentPo.getCourseId())
+                .studentId(courseEnrollmentPo.getStudentId())
+                .termId(courseEnrollmentPo.getTermId())
+                .build();
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public CourseEnrollmentVo enrollmentDelete(Long id) {
-        return null;
+        if (id == null) {
+            throw new ServiceException(ResultCode.PARAM_ERROR);
+        }
+        CourseEnrollmentPo courseEnrollmentPo = courseEnrollmentMapper.selectById(id);
+        if (courseEnrollmentPo == null) {
+            throw new ServiceException(ResultCode.COURSE_ENROLLMENT_NOT_EXIST);
+        }
+        courseEnrollmentMapper.deleteById(id);
+        return CourseEnrollmentVo.builder()
+                .courseId(courseEnrollmentPo.getCourseId())
+                .studentId(courseEnrollmentPo.getStudentId())
+                .termId(courseEnrollmentPo.getTermId())
+                .build();
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public List<CourseEnrollmentVo> enrollmentDeleteAll(List<Long> ids) {
-        return List.of();
+        if (ids == null) {
+            throw new ServiceException(ResultCode.PARAM_ERROR);
+        }
+        if (ids.isEmpty()) {
+            throw new ServiceException(ResultCode.COURSE_ENROLLMENT_NOT_EXIST);
+        }
+        List<CourseEnrollmentPo> courseEnrollmentPos = courseEnrollmentMapper.selectBatchIds(ids);
+        if (courseEnrollmentPos.isEmpty()) {
+            throw new ServiceException(ResultCode.COURSE_ENROLLMENT_NOT_EXIST);
+        }
+
+        List<Long> newIds = courseEnrollmentPos.stream().map(CourseEnrollmentPo::getId).collect(Collectors.toList());
+        courseEnrollmentMapper.deleteByIds(newIds);
+
+        return courseEnrollmentPos.stream().map(po-> CourseEnrollmentVo.builder()
+                .courseId(po.getCourseId())
+                .studentId(po.getStudentId())
+                .termId(po.getTermId())
+                .id(po.getId())
+                .build()
+        ).toList();
     }
+
+    /**
+     * 管理端的分页查询,多表查询
+     * @param courseEnrollmentQueryDto
+     * @return
+     */
 
     @Override
     public PageResult<CourseEnrollmentVo> enrollmentQuery(CourseEnrollmentQueryDto courseEnrollmentQueryDto) {
-        return null;
+        if (courseEnrollmentQueryDto == null) {
+            courseEnrollmentQueryDto = new CourseEnrollmentQueryDto();
+            courseEnrollmentQueryDto.setPageNo(1);
+            courseEnrollmentQueryDto.setPageSize(10);
+        }
+        //1.构建分页mp对象
+        Page<CourseEnrollmentVo> page = new Page<>(courseEnrollmentQueryDto.getPageNo(), courseEnrollmentQueryDto.getPageSize());
+
+        //2.调用自定义xml方法
+        IPage<CourseEnrollmentVo> result = courseEnrollmentMapper.selectCourseEnrollmentPage(page , courseEnrollmentQueryDto);
+        List<CourseEnrollmentVo> records = result.getRecords();
+
+        return PageResult.<CourseEnrollmentVo>builder()
+                .Total(result.getTotal())
+                .Page(result.getPages())
+                .list(records)
+                .build();
     }
 }

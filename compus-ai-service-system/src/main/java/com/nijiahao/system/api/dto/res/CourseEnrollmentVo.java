@@ -30,4 +30,13 @@ public class CourseEnrollmentVo {
     private Long termId;
 
     private Integer revision;
+
+    private String courseName;
+
+    private String termName;
+
+    private String studentName;
+
+    private String location;
+
 }

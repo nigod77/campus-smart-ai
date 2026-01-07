@@ -10,8 +10,6 @@ import java.util.List;
 
 public interface CourseEnrollmentService {
     CourseEnrollmentVo enrollmentAdd(CourseEnrollmentAddDto courseEnrollmentAddDto);
-
-    CourseEnrollmentVo enrollmentUpdate(CourseEnrollmentUpdateDto courseEnrollmentUpdateDto);
     
     CourseEnrollmentVo enrollmentSelectOne(Long id);
 

@@ -27,4 +27,6 @@ public class UserUpdateDto {
 
     private Integer revision;
 
+    private Long ClassId;
+
 }

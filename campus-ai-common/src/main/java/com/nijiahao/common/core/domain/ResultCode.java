@@ -40,6 +40,8 @@ public enum ResultCode {
     COURSE_NOT_EXIST(1212 , "课程不存在"),
     COURSE_INSERT_ERROR(1213 , "课程插入失败"),
 
+    COURSE_ALREADY_HAS_BEEN_SELECT(1220,"在这个学期你已经选过这个课程了"),
+    COURSE_ENROLLMENT_NOT_EXIST(1221 , "选课关系不存在"),
 
     ;
 

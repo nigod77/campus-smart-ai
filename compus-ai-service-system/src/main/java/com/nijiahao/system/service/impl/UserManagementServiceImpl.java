@@ -91,6 +91,10 @@ public class UserManagementServiceImpl extends ServiceImpl<UserMapper , UserPo> 
             updateEntity.setGender(userUpdateDto.getGender());
             hasChange = true;
         }
+        if (userUpdateDto.getClassId() != null) {
+            updateEntity.setClassId(userUpdateDto.getClassId());
+            hasChange = true;
+        }
         // 6. 执行更新
         if (hasChange) {
             int rows = userMapper.updateById(updateEntity);

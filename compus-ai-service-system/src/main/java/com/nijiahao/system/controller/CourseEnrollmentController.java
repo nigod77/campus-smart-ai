@@ -25,11 +25,7 @@ public class CourseEnrollmentController implements CourseEnrollmentApi {
         return Result.success(courseEnrollmentVo);
     }
 
-    @Override
-    public Result<CourseEnrollmentVo> enrollmentUpdate(CourseEnrollmentUpdateDto courseEnrollmentUpdateDto) {
-        CourseEnrollmentVo courseEnrollmentVo = courseEnrollmentService.enrollmentUpdate(courseEnrollmentUpdateDto);
-        return Result.success(courseEnrollmentVo);
-    }
+
 
     @Override
     public Result<CourseEnrollmentVo> enrollmentSelectOne(Long id) {
