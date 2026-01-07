@@ -18,18 +18,20 @@ public class CourseEnrollmentVo {
     /**
      * 学生ID (关联 sys_user)
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long studentId;
 
     /**
      * 课程ID (关联 campus_course)
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long courseId;
 
     // ================= 冗余提速 =================
-
     /**
      * 学期ID (冗余字段，用于加速查询)
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long termId;
 
     private Integer revision;

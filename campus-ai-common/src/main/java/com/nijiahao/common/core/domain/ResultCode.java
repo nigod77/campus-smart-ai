@@ -42,6 +42,8 @@ public enum ResultCode {
 
     COURSE_ALREADY_HAS_BEEN_SELECT(1220,"在这个学期你已经选过这个课程了"),
     COURSE_ENROLLMENT_NOT_EXIST(1221 , "选课关系不存在"),
+    COURSE_HAS_BEEN_SELECT(1222 , "你选过这个课了"),
+    COURSE_ENROLLMENT_FAIL(1223,"选课失败"),
 
     ;
 

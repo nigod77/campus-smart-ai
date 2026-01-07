@@ -6,12 +6,14 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.nijiahao.common.core.domain.Result;
 import com.nijiahao.common.core.domain.ResultCode;
 import com.nijiahao.common.core.exception.ServiceException;
 import com.nijiahao.system.api.dto.Po.UserPo;
 import com.nijiahao.system.api.dto.req.UserLoginDto;
 import com.nijiahao.system.api.dto.req.UserRegisterDto;
 import com.nijiahao.system.api.dto.res.UserLoginVo;
+import com.nijiahao.system.api.dto.res.UserVo;
 import com.nijiahao.system.mapper.UserMapper;
 import com.nijiahao.system.service.UserAuthService;
 import lombok.extern.slf4j.Slf4j;
@@ -79,5 +81,23 @@ public class UserAuthServiceImpl extends ServiceImpl<UserMapper, UserPo> impleme
             throw new ServiceException(ResultCode.UNAUTHORIZED);
         }
         StpUtil.logout();
+    }
+
+    @Override
+    public UserVo getInfo() {
+        Long loginId = StpUtil.getLoginIdAsLong();
+        UserPo userPo = userMapper.selectById(loginId);
+
+        return UserVo.builder()
+                .id(userPo.getId())
+                .userName(userPo.getUserName())
+                .nickName(userPo.getNickName())
+                .gender(userPo.getGender())
+                .identity(userPo.getIdentity())
+                .workId(userPo.getWorkId())
+                .image(userPo.getImage())
+                .createTime(userPo.getCreateTime())
+                .classId(userPo.getClassId())
+                .build();
     }
 }

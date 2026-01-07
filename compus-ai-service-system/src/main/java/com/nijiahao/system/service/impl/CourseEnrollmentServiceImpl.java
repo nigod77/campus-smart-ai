@@ -14,6 +14,7 @@ import com.nijiahao.system.api.dto.Po.TermPo;
 import com.nijiahao.system.api.dto.Po.UserPo;
 import com.nijiahao.system.api.dto.req.CourseEnrollmentAddDto;
 import com.nijiahao.system.api.dto.req.CourseEnrollmentQueryDto;
+import com.nijiahao.system.api.dto.req.CourseStudentEnrollmentDto;
 import com.nijiahao.system.api.dto.res.CourseEnrollmentVo;
 import com.nijiahao.system.mapper.CourseEnrollmentMapper;
 import com.nijiahao.system.mapper.CourseMapper;
@@ -171,5 +172,40 @@ public class CourseEnrollmentServiceImpl extends ServiceImpl< CourseEnrollmentMa
                 .Page(result.getPages())
                 .list(records)
                 .build();
+    }
+
+    @Override
+    public CourseEnrollmentVo studentEnrollment(CourseStudentEnrollmentDto courseStudentEnrollmentDto, Long studentId) {
+        if (courseStudentEnrollmentDto == null || studentId == null) {
+            throw new ServiceException(ResultCode.PARAM_ERROR);
+        }
+        //查看学生是否已经选过该课程
+        Long count = courseEnrollmentMapper.selectCount(Wrappers.lambdaQuery(CourseEnrollmentPo.class)
+                .eq(CourseEnrollmentPo::getStudentId, studentId)
+                .eq(CourseEnrollmentPo::getCourseId,courseStudentEnrollmentDto.getCourseId()));
+        if (count > 0) {
+            throw new ServiceException(ResultCode.COURSE_HAS_BEEN_SELECT);
+        }
+        CourseEnrollmentPo resultCourseEnrollmentPo = new CourseEnrollmentPo();
+        resultCourseEnrollmentPo.setCourseId(courseStudentEnrollmentDto.getCourseId());
+        resultCourseEnrollmentPo.setStudentId(studentId);
+
+        //通过课程查出学期id
+        CoursePo coursePo = courseMapper.selectById(courseStudentEnrollmentDto.getCourseId());
+        if (coursePo == null) {
+            throw new ServiceException(ResultCode.COURSE_NOT_EXIST);
+        }
+        resultCourseEnrollmentPo.setTermId(coursePo.getTermId());
+        //开始选课
+        int insert = courseEnrollmentMapper.insert(resultCourseEnrollmentPo);
+        if (insert == 0) {
+            throw new ServiceException(ResultCode.COURSE_ENROLLMENT_FAIL);
+        }
+        return CourseEnrollmentVo.builder()
+                .courseId(resultCourseEnrollmentPo.getCourseId())
+                .studentId(resultCourseEnrollmentPo.getStudentId())
+                .termId(resultCourseEnrollmentPo.getTermId())
+                .build();
+
     }
 }

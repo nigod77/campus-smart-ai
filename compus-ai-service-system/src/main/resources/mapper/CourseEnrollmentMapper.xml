@@ -19,7 +19,6 @@
         LEFT JOIN
         campus_sys_course c ON e.course_id = c.id
         LEFT JOIN
-        /* 建议：既然 e 表里有 term_id，通常直接用 e.term_id 关联 term 表更准确 */
         campus_sys_term t ON t.id = e.term_id
         <where>
             e.deleted = 0

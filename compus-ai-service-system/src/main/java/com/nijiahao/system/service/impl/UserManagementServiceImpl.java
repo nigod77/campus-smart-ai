@@ -7,26 +7,46 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nijiahao.common.core.domain.PageResult;
 import com.nijiahao.common.core.domain.ResultCode;
 import com.nijiahao.common.core.exception.ServiceException;
+import com.nijiahao.system.api.dto.Po.ClassPo;
+import com.nijiahao.system.api.dto.Po.CourseEnrollmentPo;
+import com.nijiahao.system.api.dto.Po.CoursePo;
 import com.nijiahao.system.api.dto.Po.UserPo;
 import com.nijiahao.system.api.dto.req.UserAddDto;
 import com.nijiahao.system.api.dto.req.UserQueryDto;
 import com.nijiahao.system.api.dto.req.UserUpdateDto;
+import com.nijiahao.system.api.dto.res.ClassVo;
+import com.nijiahao.system.api.dto.res.UserCourseVo;
 import com.nijiahao.system.api.dto.res.UserVo;
+import com.nijiahao.system.mapper.ClassMapper;
+import com.nijiahao.system.mapper.CourseEnrollmentMapper;
+import com.nijiahao.system.mapper.CourseMapper;
 import com.nijiahao.system.mapper.UserMapper;
 import com.nijiahao.system.service.UserManagementService;
+import org.apache.catalina.User;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
 public class UserManagementServiceImpl extends ServiceImpl<UserMapper , UserPo> implements UserManagementService {
 
     @Autowired
-    UserMapper userMapper;
+    private UserMapper userMapper;
+    @Autowired
+    private ClassMapper classMapper;
+    @Autowired
+    private CourseMapper courseMapper;
+    @Autowired
+    private CourseEnrollmentMapper courseEnrollmentMapper;
 
     @Override
     public UserVo addUser(UserAddDto userAddDto) {
@@ -199,8 +219,7 @@ public class UserManagementServiceImpl extends ServiceImpl<UserMapper , UserPo> 
         Page<UserPo> userPoPage = userMapper.selectPage(page, userPoLambdaQueryWrapper);
 
         //4.数据转换PO->VO
-        List<UserVo> userVos = userPoPage.getRecords().stream().map(po-> UserVo.builder()
-                .id(po.getId())
+        List<UserVo> userVos = userPoPage.getRecords().stream().map(po-> UserVo.builder().id(po.getId())
                 .userName(po.getUserName())
                 .nickName(po.getNickName())
                 .identity(po.getIdentity())
@@ -208,14 +227,43 @@ public class UserManagementServiceImpl extends ServiceImpl<UserMapper , UserPo> 
                 .workId(po.getWorkId())
                 .image(po.getImage())
                 .revision(po.getRevision())
+                .createTime(po.getCreateTime())
+                .gender(po.getGender())
                 .build()).toList();
 
+
+        //补充查询班级的逻辑
+        List<UserPo> records = userPoPage.getRecords();
+
+        Set<Long> classId = records.stream().map(UserPo::getClassId).filter(Objects::nonNull).collect(Collectors.toSet());
+
+        Map<Long, ClassPo> collect = classMapper.selectBatchIds(classId).stream().collect(Collectors.toMap(ClassPo::getId, Function.identity()));
+
+        List<UserVo> list = userVos.stream().map(vo -> {
+            UserVo userVo = new UserVo();
+            BeanUtils.copyProperties(vo, userVo);
+            if (userVo.getClassId() == null) {
+                userVo.setClassName("无班级");
+            } else if (collect.get(userVo.getClassId()) == null) {
+                userVo.setClassName("无班级");
+            } else {
+                userVo.setClassName(collect.get(userVo.getClassId()).getGrade() + "级" + collect.get(userVo.getClassId()).getMajor() + collect.get(userVo.getClassId()).getClassNumber() + "班");
+            }
+            return userVo;
+        }).toList();
+
         return PageResult.<UserVo>builder()
-                .list(userVos)
+                .list(list)
                 .Page(userPoPage.getPages())
                 .Total(userPoPage.getTotal())
                 .build();
 
+    }
+
+    @Override
+    public List<UserCourseVo> selectUSerCourse(Long userId) {
+
+        return courseMapper.selectCourseByStudentId(userId);
     }
 
 }

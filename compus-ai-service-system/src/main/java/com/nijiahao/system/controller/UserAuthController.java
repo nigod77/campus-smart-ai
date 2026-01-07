@@ -39,4 +39,9 @@ public class UserAuthController implements UserAuthApi {
         userAuthService.userLogout();
         return Result.success();
     }
+
+    @Override
+    public Result<UserVo> get() {
+        return Result.success(userAuthService.getInfo());
+    }
 }

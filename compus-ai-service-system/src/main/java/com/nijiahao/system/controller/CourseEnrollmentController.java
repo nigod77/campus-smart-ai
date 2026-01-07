@@ -1,11 +1,12 @@
 package com.nijiahao.system.controller;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.nijiahao.common.core.domain.PageResult;
 import com.nijiahao.common.core.domain.Result;
 import com.nijiahao.system.api.CourseEnrollmentApi;
 import com.nijiahao.system.api.dto.req.CourseEnrollmentAddDto;
 import com.nijiahao.system.api.dto.req.CourseEnrollmentQueryDto;
-import com.nijiahao.system.api.dto.req.CourseEnrollmentUpdateDto;
+import com.nijiahao.system.api.dto.req.CourseStudentEnrollmentDto;
 import com.nijiahao.system.api.dto.res.CourseEnrollmentVo;
 import com.nijiahao.system.service.CourseEnrollmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 public class CourseEnrollmentController implements CourseEnrollmentApi {
+
 
     @Autowired
     private CourseEnrollmentService courseEnrollmentService;
@@ -48,5 +50,12 @@ public class CourseEnrollmentController implements CourseEnrollmentApi {
     @Override
     public PageResult<CourseEnrollmentVo> enrollmentQuery(CourseEnrollmentQueryDto courseEnrollmentQueryDto) {
         return courseEnrollmentService.enrollmentQuery(courseEnrollmentQueryDto);
+    }
+
+    @Override
+    public Result<CourseEnrollmentVo> studentEnrollment(CourseStudentEnrollmentDto courseStudentEnrollmentDto) {
+        Long studentId = StpUtil.getLoginIdAsLong();
+
+        return  Result.success(courseEnrollmentService.studentEnrollment(courseStudentEnrollmentDto, studentId));
     }
 }

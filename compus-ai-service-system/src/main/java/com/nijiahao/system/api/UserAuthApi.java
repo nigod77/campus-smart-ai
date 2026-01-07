@@ -29,4 +29,9 @@ public interface UserAuthApi {
     @GetMapping("/auth/logout")
     Result<Void> logout();
 
+    @Operation(summary = "个人信息" , description = "查看个人信息")
+    @GetMapping("/auth/get")
+    Result<UserVo> get();
+
+
 }

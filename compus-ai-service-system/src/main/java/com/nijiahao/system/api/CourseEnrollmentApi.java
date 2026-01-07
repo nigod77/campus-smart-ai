@@ -4,6 +4,7 @@ import com.nijiahao.common.core.domain.PageResult;
 import com.nijiahao.common.core.domain.Result;
 import com.nijiahao.system.api.dto.req.CourseEnrollmentAddDto;
 import com.nijiahao.system.api.dto.req.CourseEnrollmentQueryDto;
+import com.nijiahao.system.api.dto.req.CourseStudentEnrollmentDto;
 import com.nijiahao.system.api.dto.res.CourseEnrollmentVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -36,6 +37,7 @@ public interface CourseEnrollmentApi {
     @GetMapping("/manage/query")
     PageResult<CourseEnrollmentVo> enrollmentQuery(CourseEnrollmentQueryDto courseEnrollmentQueryDto);
 
-
+    @Operation(summary = "学生选课" , description = "学生选课")
+    Result<CourseEnrollmentVo> studentEnrollment(CourseStudentEnrollmentDto courseStudentEnrollmentDto);
 
 }

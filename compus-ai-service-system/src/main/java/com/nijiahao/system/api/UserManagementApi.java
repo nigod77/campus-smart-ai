@@ -5,6 +5,7 @@ import com.nijiahao.common.core.domain.Result;
 import com.nijiahao.system.api.dto.req.UserAddDto;
 import com.nijiahao.system.api.dto.req.UserQueryDto;
 import com.nijiahao.system.api.dto.req.UserUpdateDto;
+import com.nijiahao.system.api.dto.res.UserCourseVo;
 import com.nijiahao.system.api.dto.res.UserVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -38,5 +39,9 @@ public interface UserManagementApi {
     @Operation(summary = "分页查询多个用户" , description = "分页查询")
     @GetMapping("/manage/query")
     PageResult<UserVo> queryUser(UserQueryDto userQueryDto);
+
+    @Operation(summary = "查询一个用户的全部选课/或授课" , description = "根据id查询选课信息")
+    @GetMapping("/manage/getcourse")
+    Result<List<UserCourseVo>> getCourse(@RequestParam(value = "userId" ) Long userId);
 
 }

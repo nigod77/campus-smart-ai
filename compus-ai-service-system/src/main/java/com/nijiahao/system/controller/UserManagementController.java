@@ -7,7 +7,9 @@ import com.nijiahao.system.api.UserManagementApi;
 import com.nijiahao.system.api.dto.req.UserAddDto;
 import com.nijiahao.system.api.dto.req.UserQueryDto;
 import com.nijiahao.system.api.dto.req.UserUpdateDto;
+import com.nijiahao.system.api.dto.res.UserCourseVo;
 import com.nijiahao.system.api.dto.res.UserVo;
+import com.nijiahao.system.mapper.CourseMapper;
 import com.nijiahao.system.service.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +24,7 @@ public class UserManagementController implements UserManagementApi {
 
     @Autowired
     UserManagementService userManagementService;
+
 
     @Override
     public Result<UserVo> addUser(@RequestBody UserAddDto userAddDto) {
@@ -56,5 +59,11 @@ public class UserManagementController implements UserManagementApi {
     @Override
     public PageResult<UserVo> queryUser(UserQueryDto userQueryDto) {
         return userManagementService.query(userQueryDto);
+    }
+
+    @Override
+    public Result<List<UserCourseVo>> getCourse(Long userId) {
+        List<UserCourseVo> userCourseVoList = userManagementService.selectUSerCourse(userId);
+        return Result.success(userCourseVoList);
     }
 }

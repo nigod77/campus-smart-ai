@@ -172,8 +172,9 @@ public class CourseManagementServiceImpl extends ServiceImpl<CourseMapper , Cour
             BeanUtils.copyProperties(oldCoursePo, courseVo);
             return courseVo;
         }
-        LambdaQueryWrapper<CoursePo> eq = Wrappers.lambdaQuery(CoursePo.class).select(CoursePo::getId).ne(CoursePo::getId, oldCoursePo.getId());
+
         if (showCheck){
+            LambdaQueryWrapper<CoursePo> eq = Wrappers.lambdaQuery(CoursePo.class).select(CoursePo::getId).ne(CoursePo::getId, oldCoursePo.getId());
             eq
                     .eq(CoursePo::getCourseName, oldCoursePo.getCourseName())
                     .eq(CoursePo::getTermId, oldCoursePo.getTermId())
