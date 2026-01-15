@@ -55,7 +55,6 @@ public class CourseEnrollmentController implements CourseEnrollmentApi {
     @Override
     public Result<CourseEnrollmentVo> studentEnrollment(CourseStudentEnrollmentDto courseStudentEnrollmentDto) {
         Long studentId = StpUtil.getLoginIdAsLong();
-
         return  Result.success(courseEnrollmentService.studentEnrollment(courseStudentEnrollmentDto, studentId));
     }
 }

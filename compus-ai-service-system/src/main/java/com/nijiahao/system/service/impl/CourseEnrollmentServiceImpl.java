@@ -206,6 +206,5 @@ public class CourseEnrollmentServiceImpl extends ServiceImpl< CourseEnrollmentMa
                 .studentId(resultCourseEnrollmentPo.getStudentId())
                 .termId(resultCourseEnrollmentPo.getTermId())
                 .build();
-
     }
 }

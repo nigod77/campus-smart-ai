@@ -1,11 +1,13 @@
 package com.nijiahao.system.api;
 
+import cn.dev33.satoken.annotation.SaCheckRole;
 import com.nijiahao.common.core.domain.PageResult;
 import com.nijiahao.common.core.domain.Result;
 import com.nijiahao.system.api.dto.req.CourseEnrollmentAddDto;
 import com.nijiahao.system.api.dto.req.CourseEnrollmentQueryDto;
 import com.nijiahao.system.api.dto.req.CourseStudentEnrollmentDto;
 import com.nijiahao.system.api.dto.res.CourseEnrollmentVo;
+import io.micrometer.core.instrument.internal.OnlyOnceLoggingDenyMeterFilter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +39,9 @@ public interface CourseEnrollmentApi {
     @GetMapping("/manage/query")
     PageResult<CourseEnrollmentVo> enrollmentQuery(CourseEnrollmentQueryDto courseEnrollmentQueryDto);
 
+    @SaCheckRole(value = {"student"})
     @Operation(summary = "学生选课" , description = "学生选课")
+    @PostMapping("/manage/studentEnrollentCourse")
     Result<CourseEnrollmentVo> studentEnrollment(CourseStudentEnrollmentDto courseStudentEnrollmentDto);
 
 }
