@@ -45,6 +45,11 @@ public enum ResultCode {
     COURSE_HAS_BEEN_SELECT(1222 , "你选过这个课了"),
     COURSE_ENROLLMENT_FAIL(1223,"选课失败"),
 
+    ROBOT_ERROR(1224 , "机器人模块错误"),
+    ROBOT_CREATE_ERROR(1225,"机器人创建失败"),
+    ROBOT_NOT_EXIST(1226,"这个机器人不存在"),
+    ROBOT_BE_CHANGED_BYOTHER(1227 , "这条消息已经被别人修改了"),
+    NO_PERMISSION(1228 , "无权查看这个机器人"),
     ;
 
 

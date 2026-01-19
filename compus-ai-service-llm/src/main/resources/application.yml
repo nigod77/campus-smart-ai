@@ -7,6 +7,11 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/campus_smart?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: abc123
 
 sa-token:
   # token名称 (同时也是cookie名称)
@@ -29,3 +34,24 @@ springdoc:
     enabled: true
   api-docs:
     path: /llm/v3/api-docs
+
+
+mybatis-plus:
+  # 1. 扫描 Mapper XML 文件 (通常放在 resources/mapper 目录下)
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  # 2. 实体类别名扫描 (XML里写 resultType 时就可以直接写类名，不用写全限定包名)
+  type-aliases-package: com.nijiahao.system.domain
+  configuration:
+    # 3. 开发神器：开启控制台 SQL 日志打印 (上线时记得关掉或改为 File)
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 4. 驼峰命名自动转换 (user_name -> userName)
+    map-underscore-to-camel-case: true
+  global-config:
+    banner: false # 关闭启动时的 MP 字符画
+    db-config:
+      # 5. 全局主键策略：雪花算法 (对应你想要的 19 位 ID)
+      id-type: assign_id
+      # 6. 全局逻辑删除配置 (BaseEntity 里的 @TableLogic 依赖这个)
+      logic-delete-field: deleted  # 数据库里的字段名
+      logic-delete-value: 1        # 删除后的值
+      logic-not-delete-value: 0    # 正常值

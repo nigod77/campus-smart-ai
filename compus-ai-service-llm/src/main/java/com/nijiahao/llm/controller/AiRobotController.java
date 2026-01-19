@@ -3,6 +3,9 @@ package com.nijiahao.llm.controller;
 import com.nijiahao.common.core.domain.PageResult;
 import com.nijiahao.common.core.domain.Result;
 import com.nijiahao.llm.api.AiRobotApi;
+import com.nijiahao.llm.api.dto.req.AiRobotAddDto;
+import com.nijiahao.llm.api.dto.req.AiRobotEditDto;
+import com.nijiahao.llm.api.dto.req.AiRobotPageDto;
 import com.nijiahao.llm.api.dto.res.AiRobotVo;
 import com.nijiahao.llm.service.AiRobotService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,38 +20,42 @@ public class AiRobotController implements AiRobotApi {
     private AiRobotService aiRobotService;
 
     @Override
-    public Result<AiRobotVo> addRobot(AiRobotApi robot) {
-        AiRobotVo aiRobotVo = aiRobotService.addRobot(robot);
+    public Result<AiRobotVo> addRobot(AiRobotAddDto aiRobotAddDto) {
+        AiRobotVo aiRobotVo = aiRobotService.addRobot(aiRobotAddDto);
         return Result.success(aiRobotVo);
     }
 
     @Override
-    public Result<AiRobotVo> updateRobot(AiRobotApi robot) {
-        AiRobotVo aiRobotVo = aiRobotService.updateRobot(robot);
+    public Result<AiRobotVo> updateRobot(AiRobotEditDto aiRobotEditDto) {
+        AiRobotVo aiRobotVo = aiRobotService.updateRobot(aiRobotEditDto);
         return Result.success(aiRobotVo);
     }
 
     @Override
     public Result<AiRobotVo> selectRobot(Long robotId) {
-        AiRobotVo aiRobotVo = aiRobotService.addRobot(robot);
+        AiRobotVo aiRobotVo = aiRobotService.selectRobot(robotId);
         return Result.success(aiRobotVo);
     }
 
     @Override
     public Result<AiRobotVo> deleteRobot(Long robotId) {
-        AiRobotVo aiRobotVo = aiRobotService.addRobot(robot);
+        AiRobotVo aiRobotVo = aiRobotService.deleteRobot(robotId);
         return Result.success(aiRobotVo);
     }
 
     @Override
     public Result<List<AiRobotVo>> deleteAllRobot(List<Long> robotIds) {
-        AiRobotVo aiRobotVo = aiRobotService.addRobot(robot);
-        return Result.success(aiRobotVo);
+        List<AiRobotVo> aiRobotVoList = aiRobotService.deleteAllRobot(robotIds);
+        return Result.success(aiRobotVoList);
     }
 
     @Override
-    public PageResult<AiRobotVo> queryRobot(AiRobotApi robot) {
-        AiRobotVo aiRobotVo = aiRobotService.addRobot(robot);
-        return Result.success(aiRobotVo);
+    public PageResult<AiRobotVo> queryRobot(AiRobotPageDto aiRobotPageDto) {
+        return aiRobotService.queryRobot(aiRobotPageDto);
+    }
+
+    @Override
+    public List<AiRobotVo> robotList() {
+        return aiRobotService.robotList();
     }
 }
