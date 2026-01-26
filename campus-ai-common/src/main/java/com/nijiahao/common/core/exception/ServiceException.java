@@ -23,4 +23,11 @@ public class ServiceException extends RuntimeException {
         // 2. 把枚举里的 code 赋值给当前类的 code
         this.code = resultCode.getCode();
     }
+
+    public ServiceException(ResultCode resultCode , String msg) {
+        // 1. 把枚举里的 msg 传给父类 RuntimeException
+        super(resultCode.getMsg()+msg);
+        // 2. 把枚举里的 code 赋值给当前类的 code
+        this.code = resultCode.getCode();
+    }
 }

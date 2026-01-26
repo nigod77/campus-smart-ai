@@ -30,9 +30,9 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         // 自动填充修改时间
         this.strictInsertFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
 
-        this.strictInsertFill(metaObject, "createUserId", Long.class, getCurrentUserId());
+        //this.strictInsertFill(metaObject, "createUserId", Long.class, getCurrentUserId());
 
-        this.strictInsertFill(metaObject, "updateUserId", Long.class, getCurrentUserId());
+        //this.strictInsertFill(metaObject, "updateUserId", Long.class, getCurrentUserId());
 
         // 1. 填充 revision (默认从 1 开始)
         // 参数：metaObject, 字段名(Java属性名), 字段类型, 默认值
@@ -49,6 +49,6 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         // 自动填充修改时间
         this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
         // 自动填充修改人
-       this.strictUpdateFill(metaObject, "updateUserId", Long.class, getCurrentUserId());
+     //  this.strictUpdateFill(metaObject, "updateUserId", Long.class, getCurrentUserId());
     }
 }

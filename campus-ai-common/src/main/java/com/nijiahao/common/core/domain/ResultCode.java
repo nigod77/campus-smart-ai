@@ -50,6 +50,11 @@ public enum ResultCode {
     ROBOT_NOT_EXIST(1226,"这个机器人不存在"),
     ROBOT_BE_CHANGED_BYOTHER(1227 , "这条消息已经被别人修改了"),
     NO_PERMISSION(1228 , "无权查看这个机器人"),
+
+    LLM_CHAT(1300, "大模型调用错误"),
+    SESSION_ERROR(1301 , "会话模块错误"),
+    STREAM_REPLY_ERROR(1302 , "流式响应出错"),
+
     ;
 
 
