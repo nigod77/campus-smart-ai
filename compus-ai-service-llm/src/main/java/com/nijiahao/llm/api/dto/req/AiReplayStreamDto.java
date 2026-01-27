@@ -10,10 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AiReplayStreamDto {
-    /**
-     * 机器人id
-     */
-    private Long robotId;
 
     /**
      * sessionId
