@@ -4,16 +4,29 @@ spring:
   application:
     name: campus-ai-service-llm
   ai:
-
-    deepseek:
-      api-key: sk-7be11144dd104c238ad3a5cae2c0f703
+    openai:
+      embedding:
+        options:
+          model: none
       base-url: https://api.deepseek.com
+      api-key: sk-7be11144dd104c238ad3a5cae2c0f703
       chat:
         options:
           model: deepseek-chat
-          temperature: 0.7
-
-
+    vectorstore:
+      milvus:
+        auto-id: true
+        collection-name: rag_demo_768
+        client:
+          host: 127.0.0.1
+          port: 6783
+        initialize-schema: true
+        embedding-dimension: 768
+    ollama:
+      base-url: http://localhost:11434
+      embedding:
+        options:
+          model: nomic-embed-text
 
   cloud:
     nacos:
@@ -67,5 +80,3 @@ mybatis-plus:
       logic-delete-field: deleted  # 数据库里的字段名
       logic-delete-value: 1        # 删除后的值
       logic-not-delete-value: 0    # 正常值
-
-# ===== 你自己定义的配置（Spring 不会校验，但能用）=====

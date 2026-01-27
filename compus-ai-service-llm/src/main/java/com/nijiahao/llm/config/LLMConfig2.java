@@ -12,9 +12,9 @@ import org.springframework.context.annotation.Configuration;
 public class LLMConfig2 {
 
     @Bean
-    public ChatClient chatClient(@Qualifier("deepSeekChatModel") ChatModel chatmodel) {
-        return ChatClient.builder(chatmodel)
-                .defaultAdvisors(new SimpleLoggerAdvisor())
+    public ChatClient chatClient(ChatModel chatModel) {
+        return ChatClient.builder(chatModel)
+                .defaultSystem("你是一个校园 AI 助手")
                 .build();
     }
 
