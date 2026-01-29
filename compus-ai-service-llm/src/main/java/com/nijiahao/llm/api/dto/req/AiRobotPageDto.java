@@ -16,6 +16,14 @@ public class AiRobotPageDto implements Serializable {
     private Integer pageSize = 10;
 
     // --- 过滤条件 ---
+    private String robotName;
+
+    private Integer isPublic;
+
+    private Integer status;
+
+    private String modelName;
+
 
 
 

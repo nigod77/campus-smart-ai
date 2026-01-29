@@ -1,6 +1,10 @@
 server:
   port: 9011
 spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB      # 单个文件最大大小
+      max-request-size: 50MB   # 整个请求最大大小
   application:
     name: campus-ai-service-llm
   ai:

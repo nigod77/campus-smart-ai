@@ -169,7 +169,7 @@ public class AiRobotServiceImpl extends ServiceImpl<AiRobotMapper , AiRobotPo> i
         LambdaQueryWrapper<AiRobotPo> aiRobotPoLambdaQueryWrapper = new LambdaQueryWrapper<>();
 
         aiRobotPoLambdaQueryWrapper.like(StringUtils.hasText(aiRobotPageDto.getRobotName()) , AiRobotPo::getRobotName, aiRobotPageDto.getRobotName());
-        aiRobotPoLambdaQueryWrapper.eq(StringUtils.hasText(aiRobotPageDto.getRobotName()) , AiRobotPo::getModelName, aiRobotPageDto.getModelName());
+        aiRobotPoLambdaQueryWrapper.eq(StringUtils.hasText(aiRobotPageDto.getModelName()) , AiRobotPo::getModelName, aiRobotPageDto.getModelName());
         aiRobotPoLambdaQueryWrapper.eq(aiRobotPageDto.getIsPublic() != null , AiRobotPo::getIsPublic, aiRobotPageDto.getIsPublic());
         aiRobotPoLambdaQueryWrapper.eq(aiRobotPageDto.getStatus() != null , AiRobotPo::getStatus, aiRobotPageDto.getStatus());
         aiRobotPoLambdaQueryWrapper.orderByDesc(AiRobotPo::getUpdateTime);
