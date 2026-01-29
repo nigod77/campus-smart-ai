@@ -54,6 +54,7 @@ public enum ResultCode {
     LLM_CHAT(1300, "大模型调用错误"),
     SESSION_ERROR(1301 , "会话模块错误"),
     STREAM_REPLY_ERROR(1302 , "流式响应出错"),
+    KNOWLEDGE_MANAGE_ERROR(1303 , "知识库管理出错"),
 
     ;
 

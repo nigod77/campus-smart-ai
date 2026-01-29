@@ -6,8 +6,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-@Schema(description = "AI机器人 - 分页查询入参")
-public class AiRobotPageDto implements Serializable {
+@Schema(description = "AI知识库 - 分页查询入参")
+public class AiDataSetPageDto implements Serializable {
 
     @Schema(description = "当前页", defaultValue = "1")
     private Integer pageNum = 1;
@@ -15,9 +15,7 @@ public class AiRobotPageDto implements Serializable {
     @Schema(description = "每页条数", defaultValue = "10")
     private Integer pageSize = 10;
 
-    // --- 过滤条件 ---
-
-
-
+    @Schema(description = "知识库名称")
+    private String title;
 
 }
