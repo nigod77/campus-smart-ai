@@ -1,6 +1,15 @@
 server:
   port: 9011
 spring:
+  rabbitmq:
+    host: localhost      # RabbitMQ 地址
+    port: 5672           # 通信端口 (注意不是后台的15672)
+    username: guest
+    password: guest
+    # 开启消息确认机制 (建议开启，保证消息不丢)
+    publisher-confirm-type: correlated
+    publisher-returns: true
+
   servlet:
     multipart:
       max-file-size: 50MB      # 单个文件最大大小
@@ -41,6 +50,8 @@ spring:
     url: jdbc:mysql://localhost:3306/campus_smart?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: abc123
+
+
 
 sa-token:
   # token名称 (同时也是cookie名称)
