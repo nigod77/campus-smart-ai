@@ -1,4 +1,4 @@
-package com.nijiahao.ai.api.dto.Po;
+package com.nijiahao.llm.api.dto.po;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -93,9 +93,6 @@ public class AiDocumentPo extends BaseEntity implements Serializable {
      */
     private Integer chunkCount;
 
-    /**
-     * 消耗Token数 (预估)
-     */
-    private Integer tokenCount;
+
 
 }

@@ -59,7 +59,7 @@ public class UserAuthServiceImpl extends ServiceImpl<UserMapper, UserPo> impleme
         if (userPo == null){
             throw new ServiceException(ResultCode.LOGIN_ERROR);
         }
-        if (!password.equals(userLoginDto.getPassword())){
+        if (!password.equals(userPo.getPassword())){
             throw new ServiceException(ResultCode.LOGIN_ERROR);
         }
 

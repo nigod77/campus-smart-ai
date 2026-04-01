@@ -55,6 +55,8 @@ public enum ResultCode {
     SESSION_ERROR(1301 , "会话模块错误"),
     STREAM_REPLY_ERROR(1302 , "流式响应出错"),
     KNOWLEDGE_MANAGE_ERROR(1303 , "知识库管理出错"),
+    DOCUMENT_MANAGE_ERROR(1304 , "知识文档出错"),
+
 
     ;
 

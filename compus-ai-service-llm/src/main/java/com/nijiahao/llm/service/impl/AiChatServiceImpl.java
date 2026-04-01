@@ -19,12 +19,17 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.document.Document;
+import org.springframework.ai.vectorstore.SearchRequest;
+import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import reactor.core.publisher.Flux;
+import org.springframework.ai.vectorstore.filter.Filter;
+import org.springframework.ai.vectorstore.filter.FilterExpressionBuilder;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -43,6 +48,9 @@ public class AiChatServiceImpl implements AiChatService {
 
     @Autowired
     private AiSessionMapper aiSessionMapper;
+
+    @Autowired
+    private VectorStore vectorStore;
 
     @Qualifier("chatClient")
     @Autowired
@@ -218,12 +226,71 @@ public class AiChatServiceImpl implements AiChatService {
             }
         }
 
+
+// ==========================================
+// 🌟 核心新增：RAG 知识库检索与 System Prompt 增强
+// ==========================================
+        String finalSystemPrompt = robot.getSystemPrompt() == null ? "你是一个智能校园助手。" : robot.getSystemPrompt();
+        Map<String, Object> knowledgeConfig = robot.getKnowledgeConfig();
+
+        if (knowledgeConfig != null && knowledgeConfig.containsKey("datasetIds")) {
+            List<Object> rawDatasetIds = (List<Object>) knowledgeConfig.get("datasetIds");
+
+            if (rawDatasetIds != null && !rawDatasetIds.isEmpty()) {
+
+                var b = new org.springframework.ai.vectorstore.filter.FilterExpressionBuilder();
+
+                // ① 【关键修复】：先取出第 0 个元素，初始化基础的 Op 对象 (不调用 build)
+                var finalOp = b.eq("datasetId", Long.valueOf(rawDatasetIds.get(0).toString()));
+
+                // ② 从第 1 个元素开始循环，把剩下的 ID 一直用 OR 拼接进 finalOp 里面
+                for (int i = 1; i < rawDatasetIds.size(); i++) {
+                    var nextOp = b.eq("datasetId", Long.valueOf(rawDatasetIds.get(i).toString()));
+                    finalOp = b.or(finalOp, nextOp);
+                }
+
+                // ③ 【全场唯一一次】：循环结束后，统一调用一次 .build()，把最终的 Op 转换成 Expression
+                org.springframework.ai.vectorstore.filter.Filter.Expression finalExpr = finalOp.build();
+
+                log.info("触发 RAG 检索，已通过 AST 构建底层 OR 过滤树");
+
+                // 去向量库检索最相关的文档块
+                SearchRequest searchRequest = SearchRequest.builder()
+                        .query(userPrompt)
+                        .topK(5)
+                        .filterExpression(finalExpr) // 传入最终的表达式对象
+                        .build();
+
+                List<Document> similarDocs = vectorStore.similaritySearch(searchRequest);
+
+                // 将检索到的文本块拼接到 System Prompt 中
+                if (similarDocs != null && !similarDocs.isEmpty()) {
+                    StringBuilder contextBuilder = new StringBuilder();
+                    for (int i = 0; i < similarDocs.size(); i++) {
+                        // ⚠️ 注意看这里：一定是 getText()！如果报红，请改成 getFormattedContent() 试试
+                        contextBuilder.append("[资料 ").append(i + 1).append("]:\n")
+                                .append(similarDocs.get(i).getText()).append("\n\n");
+                    }
+
+                    finalSystemPrompt += "\n\n==========\n" +
+                            "【重要指令】请严格参考以下【参考资料】来回答用户的问题。如果资料中没有相关内容，请如实回答“根据当前知识库，我没有找到相关信息”，绝对不要自己编造。\n" +
+                            "【参考资料】:\n" + contextBuilder.toString();
+
+                    log.info("成功查到 {} 条知识库片段，已注入 SystemPrompt", similarDocs.size());
+                } else {
+                    log.info("【排查点】向量库检索完成，共查出 0 条相关文档块");
+                }
+            }
+        }
+// ==========================================
+
+
         // 5. 用于累积 assistant 完整回复
         StringBuilder fullAnswer = new StringBuilder();
 
         // 6. 流式调用
         return chatClient.prompt()
-                .system(robot.getSystemPrompt())   // 人设 / 规则
+                .system(finalSystemPrompt)   // 人设 / 规则
                 .messages(messages)                // 历史上下文
                 .user(userPrompt)                  // 本轮输入
                 .stream()
@@ -243,9 +310,7 @@ public class AiChatServiceImpl implements AiChatService {
 
                     saveMessage(assistantMsg);
                 })
-                .doOnError(e -> {
-                    log.error("LLM stream error", e);
-                });
+                .doOnError(e -> log.error("LLM stream error", e));
     }
 }
 

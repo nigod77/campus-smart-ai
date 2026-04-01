@@ -3,6 +3,7 @@ package com.nijiahao.llm.config;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -27,7 +28,7 @@ public class RabbitConfig {
 
     //绑定
     @Bean
-    public Binding binding(Queue queue, DirectExchange exchange) {
+    public Binding binding(@Qualifier("queue") Queue queue, DirectExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange).with(ROUTING_KEY);
     }
 

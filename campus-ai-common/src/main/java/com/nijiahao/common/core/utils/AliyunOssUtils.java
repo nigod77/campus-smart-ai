@@ -9,6 +9,7 @@ import com.aliyun.oss.common.comm.SignVersion;
 import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.OSSObjectSummary;
 import com.aliyun.oss.model.ObjectListing;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -17,6 +18,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class AliyunOssUtils {
 
     private static final String ENDPOINT = "https://oss-cn-shenzhen.aliyuncs.com";
@@ -131,6 +133,26 @@ public class AliyunOssUtils {
             try {
                 if (reader != null) reader.close();
             } catch (Exception e) { e.printStackTrace(); }
+            if (ossClient != null) ossClient.shutdown();
+        }
+    }
+
+    /**
+     * 获取文件的字节数组（支持 PDF/Word/TXT 等所有格式）
+     */
+    public static byte[] getFileBytes(String objectName) {
+        OSS ossClient = null;
+        try {
+            ossClient = getOssClient();
+            OSSObject ossObject = ossClient.getObject(BUCKET_NAME, objectName);
+            // 直接利用工具类把流转成字节数组，简单高效
+            InputStream is = ossObject.getObjectContent();
+            return is.readAllBytes();
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return null;
+        } finally {
             if (ossClient != null) ossClient.shutdown();
         }
     }

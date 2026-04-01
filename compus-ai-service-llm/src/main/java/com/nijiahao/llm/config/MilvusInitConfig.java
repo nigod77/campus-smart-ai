@@ -35,7 +35,7 @@ public class MilvusInitConfig {
                     Map.of("content", "Ollama 可以在本地运行大模型和 embedding")
             );
 
-            vectorStore.add(List.of(d1, d2, d3));
+            //vectorStore.add(List.of(d1, d2, d3));
 
             System.out.println("✅ Milvus 初始化入库完成");
         };
