@@ -9,6 +9,12 @@ public class CourseAddDto {
 
     private Long teacherId;
 
+    /** 与 termId 二选一，前端可仅传学期名称 */
+    private String termName;
+
+    /** 与 teacherId 二选一，传教师昵称或登录账号 */
+    private String teacherName;
+
     private String courseName;
 
     private String location;

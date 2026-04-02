@@ -21,9 +21,11 @@ import com.nijiahao.system.mapper.CourseMapper;
 import com.nijiahao.system.mapper.TermMapper;
 import com.nijiahao.system.mapper.UserMapper;
 import com.nijiahao.system.service.CourseEnrollmentService;
+import com.nijiahao.system.service.support.NameReferenceResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,15 +45,33 @@ public class CourseEnrollmentServiceImpl extends ServiceImpl< CourseEnrollmentMa
     @Autowired
     private TermMapper termMapper;
 
+    @Autowired
+    private NameReferenceResolver nameReferenceResolver;
+
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public CourseEnrollmentVo enrollmentAdd(CourseEnrollmentAddDto courseEnrollmentAddDto) {
         //1.判断参数
-        if (courseEnrollmentAddDto == null
-                || courseEnrollmentAddDto.getCourseId() == null
-                ||courseEnrollmentAddDto.getStudentId() == null
-                ||courseEnrollmentAddDto.getTermId()==null) {
+        if (courseEnrollmentAddDto == null) {
+            throw new ServiceException(ResultCode.PARAM_ERROR);
+        }
+
+        if (StringUtils.hasText(courseEnrollmentAddDto.getStudentWorkId())) {
+            courseEnrollmentAddDto.setStudentId(nameReferenceResolver.requireStudentIdByWorkId(courseEnrollmentAddDto.getStudentWorkId()));
+        }
+        if (StringUtils.hasText(courseEnrollmentAddDto.getCourseName()) && StringUtils.hasText(courseEnrollmentAddDto.getTermName())) {
+            CoursePo named = nameReferenceResolver.requireCourseByNameAndTerm(
+                    courseEnrollmentAddDto.getCourseName(),
+                    courseEnrollmentAddDto.getTermName(),
+                    courseEnrollmentAddDto.getTeacherNickName());
+            courseEnrollmentAddDto.setCourseId(named.getId());
+            courseEnrollmentAddDto.setTermId(named.getTermId());
+        }
+
+        if (courseEnrollmentAddDto.getCourseId() == null
+                || courseEnrollmentAddDto.getStudentId() == null
+                || courseEnrollmentAddDto.getTermId() == null) {
             throw new ServiceException(ResultCode.PARAM_ERROR);
         }
 
@@ -179,19 +199,31 @@ public class CourseEnrollmentServiceImpl extends ServiceImpl< CourseEnrollmentMa
         if (courseStudentEnrollmentDto == null || studentId == null) {
             throw new ServiceException(ResultCode.PARAM_ERROR);
         }
+        Long courseId = courseStudentEnrollmentDto.getCourseId();
+        if (courseId == null && StringUtils.hasText(courseStudentEnrollmentDto.getCourseName())) {
+            TermPo currentTerm = termMapper.selectOne(Wrappers.lambdaQuery(TermPo.class).eq(TermPo::getIsCurrent, 1).last("LIMIT 1"));
+            if (currentTerm == null) {
+                throw new ServiceException(ResultCode.TERM_NOT_EXIST);
+            }
+            CoursePo named = nameReferenceResolver.requireCourseByNameAndTermId(courseStudentEnrollmentDto.getCourseName(), currentTerm.getId());
+            courseId = named.getId();
+        }
+        if (courseId == null) {
+            throw new ServiceException(ResultCode.PARAM_ERROR);
+        }
         //查看学生是否已经选过该课程
         Long count = courseEnrollmentMapper.selectCount(Wrappers.lambdaQuery(CourseEnrollmentPo.class)
                 .eq(CourseEnrollmentPo::getStudentId, studentId)
-                .eq(CourseEnrollmentPo::getCourseId,courseStudentEnrollmentDto.getCourseId()));
+                .eq(CourseEnrollmentPo::getCourseId, courseId));
         if (count > 0) {
             throw new ServiceException(ResultCode.COURSE_HAS_BEEN_SELECT);
         }
         CourseEnrollmentPo resultCourseEnrollmentPo = new CourseEnrollmentPo();
-        resultCourseEnrollmentPo.setCourseId(courseStudentEnrollmentDto.getCourseId());
+        resultCourseEnrollmentPo.setCourseId(courseId);
         resultCourseEnrollmentPo.setStudentId(studentId);
 
         //通过课程查出学期id
-        CoursePo coursePo = courseMapper.selectById(courseStudentEnrollmentDto.getCourseId());
+        CoursePo coursePo = courseMapper.selectById(courseId);
         if (coursePo == null) {
             throw new ServiceException(ResultCode.COURSE_NOT_EXIST);
         }

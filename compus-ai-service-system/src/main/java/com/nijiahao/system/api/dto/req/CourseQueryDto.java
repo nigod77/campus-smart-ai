@@ -11,6 +11,10 @@ public class CourseQueryDto {
 
     private String teacherId;
 
+    private String termName;
+
+    private String teacherName;
+
     private String classId;
 
     private String location;

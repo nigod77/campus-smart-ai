@@ -19,6 +19,7 @@ import com.nijiahao.system.mapper.CourseMapper;
 import com.nijiahao.system.mapper.TermMapper;
 import com.nijiahao.system.mapper.UserMapper;
 import com.nijiahao.system.service.CourseManagementService;
+import com.nijiahao.system.service.support.NameReferenceResolver;
 import org.apache.catalina.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +41,22 @@ public class CourseManagementServiceImpl extends ServiceImpl<CourseMapper , Cour
     @Autowired
     private TermMapper termMapper;
 
+    @Autowired
+    private NameReferenceResolver nameReferenceResolver;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public CourseVo addCourse(CourseAddDto courseAddDto) {
         if(courseAddDto == null){
+            throw new ServiceException(ResultCode.PARAM_ERROR);
+        }
+        if (StringUtils.hasText(courseAddDto.getTermName())) {
+            courseAddDto.setTermId(nameReferenceResolver.requireTermIdByName(courseAddDto.getTermName()));
+        }
+        if (StringUtils.hasText(courseAddDto.getTeacherName())) {
+            courseAddDto.setTeacherId(nameReferenceResolver.requireTeacherIdByName(courseAddDto.getTeacherName()));
+        }
+        if (courseAddDto.getTermId() == null || courseAddDto.getTeacherId() == null) {
             throw new ServiceException(ResultCode.PARAM_ERROR);
         }
         TermPo termPo = termMapper.selectById(courseAddDto.getTermId());
@@ -105,6 +118,12 @@ public class CourseManagementServiceImpl extends ServiceImpl<CourseMapper , Cour
         boolean showCheck = false;
         if (!courseUpdateDto.getRevision().equals(oldCoursePo.getRevision())) {
             throw new ServiceException(ResultCode.DATA_IS_OUTDATED); // 提示"数据已变更，请刷新"
+        }
+        if (StringUtils.hasText(courseUpdateDto.getTermName())) {
+            courseUpdateDto.setTermId(nameReferenceResolver.requireTermIdByName(courseUpdateDto.getTermName()));
+        }
+        if (StringUtils.hasText(courseUpdateDto.getTeacherName())) {
+            courseUpdateDto.setTeacherId(nameReferenceResolver.requireTeacherIdByName(courseUpdateDto.getTeacherName()));
         }
         if (courseUpdateDto.getTermId() != null && !(courseUpdateDto.getTermId().equals(oldCoursePo.getTermId()))){
             TermPo termPo = termMapper.selectById(courseUpdateDto.getTermId());
@@ -247,9 +266,25 @@ public class CourseManagementServiceImpl extends ServiceImpl<CourseMapper , Cour
 
         pageWrapper.like(StringUtils.hasText(courseQueryDto.getCourseName()),CoursePo::getCourseName, courseQueryDto.getCourseName());
 
-        pageWrapper.eq(courseQueryDto.getTeacherId() != null , CoursePo::getTeacherId, courseQueryDto.getTeacherId());
+        Long teacherFilter = null;
+        if (StringUtils.hasText(courseQueryDto.getTeacherName())) {
+            teacherFilter = nameReferenceResolver.requireTeacherIdByName(courseQueryDto.getTeacherName());
+        } else if (StringUtils.hasText(courseQueryDto.getTeacherId())) {
+            try {
+                teacherFilter = Long.parseLong(courseQueryDto.getTeacherId().trim());
+            } catch (NumberFormatException ignored) { /* 忽略非法数字 */ }
+        }
+        pageWrapper.eq(teacherFilter != null, CoursePo::getTeacherId, teacherFilter);
 
-        pageWrapper.eq(courseQueryDto.getTermId() != null , CoursePo::getTermId, courseQueryDto.getTermId());
+        Long termFilter = null;
+        if (StringUtils.hasText(courseQueryDto.getTermName())) {
+            termFilter = nameReferenceResolver.requireTermIdByName(courseQueryDto.getTermName());
+        } else if (StringUtils.hasText(courseQueryDto.getTermId())) {
+            try {
+                termFilter = Long.parseLong(courseQueryDto.getTermId().trim());
+            } catch (NumberFormatException ignored) { }
+        }
+        pageWrapper.eq(termFilter != null, CoursePo::getTermId, termFilter);
 
         pageWrapper.like(courseQueryDto.getLocation() != null , CoursePo::getLocation, courseQueryDto.getLocation());
 

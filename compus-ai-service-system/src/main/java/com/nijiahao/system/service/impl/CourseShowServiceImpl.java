@@ -14,8 +14,10 @@ import com.nijiahao.system.mapper.CourseMapper;
 import com.nijiahao.system.mapper.TermMapper;
 import com.nijiahao.system.mapper.UserMapper;
 import com.nijiahao.system.service.CourseShowService;
+import com.nijiahao.system.service.support.NameReferenceResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -36,9 +38,16 @@ public class CourseShowServiceImpl extends ServiceImpl<CourseEnrollmentMapper, C
     @Autowired
     private TermMapper termMapper;
 
+    @Autowired
+    private NameReferenceResolver nameReferenceResolver;
+
     @Override
     public List<CourseLookVo> showCourse2Student(CourseLookDto courseLookDto) {
         long studentId = StpUtil.getLoginIdAsLong();
+
+        if (courseLookDto.getTermId() == null && StringUtils.hasText(courseLookDto.getTermName())) {
+            courseLookDto.setTermId(nameReferenceResolver.requireTermIdByName(courseLookDto.getTermName()));
+        }
 
         // 1. 处理默认学期
         if (courseLookDto.getTermId() == null) {

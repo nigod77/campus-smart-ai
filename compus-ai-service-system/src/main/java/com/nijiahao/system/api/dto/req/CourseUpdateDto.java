@@ -14,6 +14,10 @@ public class CourseUpdateDto {
 
     private Long teacherId;
 
+    private String termName;
+
+    private String teacherName;
+
     private String courseName;
 
     private String location;

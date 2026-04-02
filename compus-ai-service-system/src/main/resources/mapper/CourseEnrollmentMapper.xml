@@ -41,6 +41,9 @@
             <if test="param.courseName != null and param.courseName != ''">
                 AND c.course_name LIKE CONCAT('%', #{param.courseName}, '%')
             </if>
+            <if test="param.termName != null and param.termName != ''">
+                AND t.term_name LIKE CONCAT('%', #{param.termName}, '%')
+            </if>
         </where>
         ORDER BY e.create_time DESC
     </select>

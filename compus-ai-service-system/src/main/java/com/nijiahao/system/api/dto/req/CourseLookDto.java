@@ -14,6 +14,9 @@ public class CourseLookDto {
 
     private Long termId;
 
+    /** 与 termId 二选一 */
+    private String termName;
+
     private int weekDay;
 
 }
